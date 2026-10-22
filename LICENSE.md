@@ -1,6 +1,7 @@
 # MIT License
 
 Copyright (c) Daniel John Jones and contributors
+Changes for AvantisHubOSC copyright (c) 2026 Black Mile Studios LLC
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

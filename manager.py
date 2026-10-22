@@ -15,7 +15,9 @@ class Manager(ControlSurface):
     def __init__(self, c_instance):
         ControlSurface.__init__(self, c_instance)
 
-        self.log_level = "info"
+        # Was "info", which wrote a line for every song position and meter
+        # reading and grew the log to gigabytes. Errors and warnings are kept.
+        self.log_level = "warning"
 
         self.handlers = []
         self.midi_mappings = {}
@@ -27,22 +29,32 @@ class Manager(ControlSurface):
             self.start_logging()
             self.init_api()
 
-            self.show_message("AbletonOSC: Listening for OSC on port %d" % abletonosc.OSC_LISTEN_PORT)
+            self.show_message("AvantisHubOSC: Listening for OSC on port %d" % abletonosc.OSC_LISTEN_PORT)
             logger.info("Started AbletonOSC on address %s" % str(self.osc_server._local_addr))
         except OSError as msg:
-            self.show_message("AbletonOSC: Couldn't bind to port %d (%s)" % (abletonosc.OSC_LISTEN_PORT, msg))
+            self.show_message("AvantisHubOSC: Couldn't bind to port %d (%s)" % (abletonosc.OSC_LISTEN_PORT, msg))
             logger.info("Couldn't bind to port %d (%s)" % (abletonosc.OSC_LISTEN_PORT, msg))
 
 
     def start_logging(self):
         """
-        Start logging to a local logfile (logs/abletonosc.log),
+        Start logging to a logfile (~/Library/Logs/AbletonOSC/<folder>/abletonosc.log),
         and relay error messages via OSC.
         """
         module_path = os.path.dirname(os.path.realpath(__file__))
-        log_dir = os.path.join(module_path, "logs")
-        if not os.path.exists(log_dir):
-            os.mkdir(log_dir, 0o755)
+        # The log is kept in ~/Library/Logs/AbletonOSC/<this folder's name>,
+        # not beside the script. Remote Scripts are often in a synced folder
+        # (Dropbox), and two Macs writing one log there made conflicted copies
+        # and constant uploads. If that folder cannot be made, fall back to
+        # the old place.
+        log_dir = os.path.join(os.path.expanduser("~"), "Library", "Logs",
+                               "AbletonOSC", os.path.basename(module_path))
+        try:
+            os.makedirs(log_dir, exist_ok=True)
+        except OSError:
+            log_dir = os.path.join(module_path, "logs")
+            if not os.path.exists(log_dir):
+                os.mkdir(log_dir, 0o755)
         log_path = os.path.join(log_dir, "abletonosc.log")
         self.log_file_handler = logging.FileHandler(log_path)
         self.log_file_handler.setLevel(self.log_level.upper())

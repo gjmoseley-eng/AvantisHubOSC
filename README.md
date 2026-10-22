@@ -1,3 +1,26 @@
+# AvantisHubOSC
+
+A copy of [AbletonOSC](https://github.com/ideoforms/AbletonOSC) for [Avantis Hub](https://gjmoseley-eng.github.io/AvantisHub-releases/), which reads Ableton Live's tempo, locators, position and clips through it. It is AbletonOSC with three changes:
+
+- **Its own ports: it listens on 11006 and replies on 11007**, so it runs in Live beside AbletonOSC or other copies of it (each needs its own control surface slot) and Avantis Hub reads Live without going through another app.
+- **Quieter logging:** warnings and errors only. AbletonOSC's default logs every song position and meter reading and can grow to gigabytes.
+- **The log is kept in `~/Library/Logs/AbletonOSC/AvantisHubOSC`**, not beside the script, so a Remote Scripts folder in Dropbox or iCloud is not rewritten by every Mac that runs Live.
+
+Everything else is AbletonOSC as it was at upstream commit `0ca6821` (19 November 2025). All credit for AbletonOSC goes to Daniel John Jones and its contributors; it is used here under its MIT license (`LICENSE.md`).
+
+## Installing
+
+1. Download `AvantisHubOSC.zip` from this repository's latest release and unzip it. You get a folder named `AvantisHubOSC`. (If you use Code > Download ZIP instead, rename the folder from `AvantisHubOSC-main` to `AvantisHubOSC`: Live will not load a name with a hyphen.)
+2. Move the folder into Live's Remote Scripts folder: `~/Music/Ableton/User Library/Remote Scripts` (make the `Remote Scripts` folder if it is not there).
+3. Restart Live. In **Settings > Link, Tempo & MIDI**, choose **AvantisHubOSC** in an empty **Control Surface** slot. Live shows "AvantisHubOSC: Listening for OSC on port 11006".
+4. In Avantis Hub, under **Inputs > Ableton Live**, turn on **Read song information from Ableton Live**. The ports default to 11006 and 11007.
+
+---
+
+## About AbletonOSC
+
+The rest of this file is AbletonOSC's own README. Where it says 11000 and 11001, AvantisHubOSC uses 11006 and 11007.
+
 # AbletonOSC: Control Ableton Live with OSC
 
 [![stability-beta](https://img.shields.io/badge/stability-beta-33bbff.svg)](https://github.com/mkenney/software-guides/blob/master/STABILITY-BADGES.md#beta)
