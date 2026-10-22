@@ -75,7 +75,7 @@ These messages are sent to the client automatically when the application state c
 | Address       | Response params | Description                                                                                        |
 |:--------------|:----------------|:---------------------------------------------------------------------------------------------------|
 | /live/startup |                 | Sent to the client application when AbletonOSC is started                                          |
-| /live/error   | error_msg       | Sent to the client application when an error occurs. For more diagnostics, see logs/abletonosc.log |
+| /live/error   | error_msg       | Sent to the client application when an error occurs. For more diagnostics, see logs/avantishubosc.log |
 
 </details>
 

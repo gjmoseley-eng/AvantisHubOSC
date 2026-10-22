@@ -215,7 +215,7 @@ class SongHandler(AbletonOSCHandler):
                 # know where to find this output .json, so unset TMPDIR.
                 #--------------------------------------------------------------------------------
                 os.environ["TMPDIR"] = ""
-            fd = open(os.path.join(tempfile.gettempdir(), "abletonosc-song-structure.json"), "w")
+            fd = open(os.path.join(tempfile.gettempdir(), "avantishubosc-song-structure.json"), "w")
             json.dump(song, fd)
             fd.close()
             self.logger.warning("Exported song structure to directory %s" % tempfile.gettempdir())

@@ -1,7 +1,7 @@
 import logging
-logger = logging.getLogger("abletonosc")
+logger = logging.getLogger("avantishubosc")
 
-logger.info("Reloading abletonosc...")
+logger.info("Reloading avantishubosc...")
 
 from .osc_server import OSCServer
 from .application import ApplicationHandler

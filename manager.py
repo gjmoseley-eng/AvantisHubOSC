@@ -2,14 +2,14 @@ from ableton.v2.control_surface import ControlSurface
 from _Framework.EncoderElement import EncoderElement
 import Live
 
-from . import abletonosc
+from . import avantishubosc
 
 import importlib
 import traceback
 import logging
 import os
 
-logger = logging.getLogger("abletonosc")
+logger = logging.getLogger("avantishubosc")
 
 class Manager(ControlSurface):
     def __init__(self, c_instance):
@@ -23,22 +23,22 @@ class Manager(ControlSurface):
         self.midi_mappings = {}
 
         try:
-            self.osc_server = abletonosc.OSCServer()
+            self.osc_server = avantishubosc.OSCServer()
             self.schedule_message(0, self.tick)
 
             self.start_logging()
             self.init_api()
 
-            self.show_message("AvantisHubOSC: Listening for OSC on port %d" % abletonosc.OSC_LISTEN_PORT)
+            self.show_message("AvantisHubOSC: Listening for OSC on port %d" % avantishubosc.OSC_LISTEN_PORT)
             logger.info("Started AbletonOSC on address %s" % str(self.osc_server._local_addr))
         except OSError as msg:
-            self.show_message("AvantisHubOSC: Couldn't bind to port %d (%s)" % (abletonosc.OSC_LISTEN_PORT, msg))
-            logger.info("Couldn't bind to port %d (%s)" % (abletonosc.OSC_LISTEN_PORT, msg))
+            self.show_message("AvantisHubOSC: Couldn't bind to port %d (%s)" % (avantishubosc.OSC_LISTEN_PORT, msg))
+            logger.info("Couldn't bind to port %d (%s)" % (avantishubosc.OSC_LISTEN_PORT, msg))
 
 
     def start_logging(self):
         """
-        Start logging to a logfile (~/Library/Logs/AbletonOSC/<folder>/abletonosc.log),
+        Start logging to a logfile (~/Library/Logs/AbletonOSC/<folder>/avantishubosc.log),
         and relay error messages via OSC.
         """
         module_path = os.path.dirname(os.path.realpath(__file__))
@@ -55,7 +55,7 @@ class Manager(ControlSurface):
             log_dir = os.path.join(module_path, "logs")
             if not os.path.exists(log_dir):
                 os.mkdir(log_dir, 0o755)
-        log_path = os.path.join(log_dir, "abletonosc.log")
+        log_path = os.path.join(log_dir, "avantishubosc.log")
         self.log_file_handler = logging.FileHandler(log_path)
         self.log_file_handler.setLevel(self.log_level.upper())
         formatter = logging.Formatter('(%(asctime)s) [%(levelname)s] %(message)s')
@@ -103,15 +103,15 @@ class Manager(ControlSurface):
 
         with self.component_guard():
             self.handlers = [
-                abletonosc.SongHandler(self),
-                abletonosc.ApplicationHandler(self),
-                abletonosc.ClipHandler(self),
-                abletonosc.ClipSlotHandler(self),
-                abletonosc.TrackHandler(self),
-                abletonosc.DeviceHandler(self),
-                abletonosc.ViewHandler(self),
-                abletonosc.SceneHandler(self),
-                abletonosc.MidiMapHandler(self),
+                avantishubosc.SongHandler(self),
+                avantishubosc.ApplicationHandler(self),
+                avantishubosc.ClipHandler(self),
+                avantishubosc.ClipSlotHandler(self),
+                avantishubosc.TrackHandler(self),
+                avantishubosc.DeviceHandler(self),
+                avantishubosc.ViewHandler(self),
+                avantishubosc.SceneHandler(self),
+                avantishubosc.MidiMapHandler(self),
             ]
 
     def clear_api(self):
@@ -132,17 +132,17 @@ class Manager(ControlSurface):
 
     def reload_imports(self):
         try:
-            importlib.reload(abletonosc.application)
-            importlib.reload(abletonosc.clip)
-            importlib.reload(abletonosc.clip_slot)
-            importlib.reload(abletonosc.device)
-            importlib.reload(abletonosc.handler)
-            importlib.reload(abletonosc.osc_server)
-            importlib.reload(abletonosc.scene)
-            importlib.reload(abletonosc.song)
-            importlib.reload(abletonosc.track)
-            importlib.reload(abletonosc.view)
-            importlib.reload(abletonosc)
+            importlib.reload(avantishubosc.application)
+            importlib.reload(avantishubosc.clip)
+            importlib.reload(avantishubosc.clip_slot)
+            importlib.reload(avantishubosc.device)
+            importlib.reload(avantishubosc.handler)
+            importlib.reload(avantishubosc.osc_server)
+            importlib.reload(avantishubosc.scene)
+            importlib.reload(avantishubosc.song)
+            importlib.reload(avantishubosc.track)
+            importlib.reload(avantishubosc.view)
+            importlib.reload(avantishubosc)
         except Exception as e:
             exc = traceback.format_exc()
             logging.warning(exc)

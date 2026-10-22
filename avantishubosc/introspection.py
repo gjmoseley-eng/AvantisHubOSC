@@ -1,6 +1,6 @@
 import inspect
 import logging
-logger = logging.getLogger("abletonosc")
+logger = logging.getLogger("avantishubosc")
 
 def describe_module(module):
     """

@@ -24,7 +24,7 @@ To reload the codebase, send an OSC message to `/live/reload`.
 
 Logging can be performed from any of the AbletonOSCHandler classes via the `self.logger` property.
 
-AbletonOSC logs internal events to `logs/abletonosc.log` relative to the AbletonOSC directory.
+AbletonOSC logs internal events to `logs/avantishubosc.log` relative to the AbletonOSC directory.
 
 ## Debugging compile-time issues
 
